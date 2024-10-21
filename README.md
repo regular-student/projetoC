@@ -1,7 +1,7 @@
 # Projeto de programação de computadores
 
-Este projeto em C foi desenvolvido para gerenciar dados hospitalares de forma eficiente e confiável.
+<p>Este projeto em C foi desenvolvido para gerenciar dados hospitalares de forma eficiente e confiável.</p>
 
-Funcionalidades 
-    • Gerenciamento de Pacientes: Adicionar, remover e atualizar informações dos pacientes.
+<h2>Funcionalidades 🏥</h2><br>
+    • Gerenciamento de Pacientes: Adicionar, remover e atualizar informações dos pacientes.<br>
     • Relatórios: Gerar relatórios detalhados sobre pacientes.
