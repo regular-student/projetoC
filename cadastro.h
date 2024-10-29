@@ -34,10 +34,60 @@ void menu_clientes(){
     printf("\n  [6] - SAIR ");
     printf("\n\n");
     
+    entra = getch();
     switch (entra){
-    	
-    	
-    	defautl :
-    		break;
+	    	
+	    	case '1':
+	    		//cadastro();
+	    		printf ("\n\n");
+	    		break;
+	    	
+	    	case '2':
+	    		printf ("\n           ########## LISTA CLIENTES ##########            ");
+	    		printf ("\nEm desenvolvimento...");
+	    		printf ("\n\n");
+	    		break;
+	    	
+			case '3':
+				printf ("\n           ########## CONSULTA DE CLIENTES ##########            ");	
+				printf ("\n\nEm desenvolvimento...");
+				printf ("\n\n");
+				break;
+				
+			case '4':
+				
+				printf("\n\n");
+				break;
+	    	
+	    	defautl :
+	    		printf("\n");
+	    		break;
+		}
+}
+
+/*void cadastro(){
+	FILE* arquivo;
+    arquivo = fopen("clientes.txt", "a+");
+    
+     if(arquivo == NULL){
+      	printf ("\n\n ERRO NA ABERTURA DO ARQUIVO \n\n");
+		}
+    else{
+    	printf ("\n           ########## CADASTRO DE CLIENTE ##########            ");
+	    printf ("\n\nEm desenvolvimento...");
 	}
+}*/
+
+void desativar_cliente(){
+		FILE* arquivo;
+    arquivo = fopen("clientes.txt", "a+");
+    
+     if(arquivo == NULL){
+      	printf ("\n\n ERRO NA ABERTURA DO ARQUIVO \n\n");
+		}
+    else{
+    	printf ("\n           ########## DESATIVAR CLIENTE ##########            ");
+	    printf ("\n\nEm desenvolvimento...");
+	}
+	
 }
