@@ -1,8 +1,8 @@
-//Bibliotecas PadrÃ£o
+//Bibliotecas Padrao
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-//Final Bibliotecas PadrÃ£o
+//Final Bibliotecas Padrao
 
 //Minhas Bibliotecas
 #include "cadastro.h"
@@ -11,6 +11,7 @@
 int main() {
 	//Definir linguagem para portugues
     setlocale(LC_ALL, "portuguese");
+    
 	//Declaracao de variaveis
 	int verific_inicial;
 	char entrada;
@@ -24,11 +25,11 @@ int main() {
 		
 		switch(entrada){
 			case '1' : //Parte dos Clientes
-				printf ("Em construï¿½ï¿½o...");
+				menu_clientes();
 				printf("\n\n");
 				break;
 			
-			case '2' : //Parte dos Serviï¿½os
+			case '2' : //Parte dos Servicos
 				printf ("Trabalhando nisso ainda...");
 				printf ("\n\n");
 				break;
@@ -38,8 +39,8 @@ int main() {
 				break;
 				
 			default :
-				printf ("\n		Opï¿½ï¿½o invalida				");
-				printf ("\n	Esolha outra opï¿½ï¿½o para continuar	");	
+				printf ("\n		Opção invalida				");
+				printf ("\n	Esolha outra opção para continuar	");	
 				printf ("\n\n")	;
 			}
 			
