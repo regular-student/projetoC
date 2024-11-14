@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <string.h>
+#include <ctype.h>
 //Final Bibliotecas Padrao
 
 //Minhas Bibliotecas
@@ -34,7 +36,7 @@ int main() {
 				printf ("\n\n");
 				break;
 			
-			case '3' :
+			case (char)27 : //Saida do programa
 				verific_inicial = 0;
 				break;
 				
