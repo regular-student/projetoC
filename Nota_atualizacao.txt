@@ -1,0 +1,17 @@
+Atualização 1.0
+	- Criação do arquivo "clientes.txt"
+	- Criação da biblioteca auxiliar "cadastro.h"
+
+Atualização 1.1
+	- Correção de erros e implementeção de novas funções
+
+Atualização 1.2
+	- Correção de erros e implementação de novas funções
+
+Atualização 2.0
+	- Aprimoramento do cadastro de clientes:
+		Na parte da situação do cliente, 1 seria para o cliente ativo e 0 para o cliente desativado
+	(o numero é definido automaticamente pois quando o cliente esta sendo cadastrado ele esta ativo)
+
+	- Alteração do botão de saida do programa
+	- Problema a ser resolvido (Professora disse que no Visual Code deve rodar o programa sem problemas)
