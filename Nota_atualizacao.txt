@@ -15,3 +15,7 @@ Atualização 2.0
 
 	- Alteração do botão de saida do programa
 	- Problema a ser resolvido (Professora disse que no Visual Code deve rodar o programa sem problemas)
+
+Atualização 2.1
+	-Correção no erro causado pela Versão 2.0 onde a referencia era indefinida para a função "cadastro"
+	-Alterações na função de cadastros (tem um erro que não esta sendo salvo no arquivo txt, na maquina da faculdade estava funcionando)

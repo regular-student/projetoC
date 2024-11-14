@@ -3,14 +3,23 @@
 #include <locale.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 typedef struct cadastro CADASTRO;
 struct cadastro{
 	char nome[51];
 	char cpf[12]; //o cpf tem 11 numeros mas o gets adiciona um \n no final
-	int situacao;
+	bool ativo;
 };
 
+//Prototipos
+void desativar_cliente(void);
+void menu_principal(void);
+void menu_clientes(void);
+void cadastro0(void);
+void desativar_cliente(void);
+void excluir_cliente(void);
+//Fim Protitipos
 
 /*Menu principal*/
 void menu_principal(){
@@ -57,7 +66,7 @@ void menu_clientes(){
 	    switch (entra){
 		    	
 		    	case '1':
-		    		cadastro();
+		    		cadastro0();
 		    		printf ("\n\n");
 		    		break;
 		    	
@@ -97,12 +106,13 @@ void menu_clientes(){
 /*Cadastro de Clientes*/
 void cadastro0(){
 	
-	 /*char nome_cliente[50];
-    int cpf_cliente;*/
-    CADASTRO cad;
+	/*char nome_cliente[50];
+    int cpf_cliente[12];
+    bool ativo;*/
+   	CADASTRO cad;
 	
 	FILE* arquivo;
-    arquivo = fopen("clientes.txt", "a+");
+    arquivo = fopen("clientes.txt", "ab");
     
      if(arquivo == NULL){
       	printf ("\n\n ERRO NA ABERTURA DO ARQUIVO \n\n");
@@ -110,17 +120,18 @@ void cadastro0(){
     else{
     	printf ("\n           ########## CADASTRO DE CLIENTE ##########            ");
 	    printf ("\n\nDigite o nome do cliente: ");
+	    
 	    fflush(stdin);
-	    fgets(cad.nome, 51, stdin);
-	    cad.nome[strcspn(cad.nome, "\n")] = 0; //retira o \n do final 
+	    fgets (cad.nome, 51, stdin);
+	   	cad.nome[strcspn(cad.nome, "\n")] = 0;
 	    
 	    printf ("Digite o CPF do cliente: ");
-	   fflush(stdin);
-	   fgets(cad.cpf, 12, stdin);
-	   cad.cpf[strcspn(cad.cpf, "\n")] = 0;
-	   
-	   cad.situacao = 1;
-
+	    
+	    fflush(stdin);
+	   	fgets (cad.cpf, 12, stdin);
+	   	cad.cpf[strcspn(cad.cpf, "\n")] = 0;
+	   	
+		cad.ativo = true;
 	}
 	
 	if (fclose(arquivo) == 0){

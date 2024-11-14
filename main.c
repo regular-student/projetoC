@@ -4,6 +4,7 @@
 #include <locale.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
 //Final Bibliotecas Padrao
 
 //Minhas Bibliotecas
