@@ -12,7 +12,7 @@ struct cadastro{
 	bool ativo;
 	char data_nascimento[11];
 	char telefone[15];
-	char *notas_enf;
+	char notas_enf[256];
 };
 
 //Prototipos
@@ -24,6 +24,7 @@ void desativar_cliente(void);
 void excluir_cliente(void);
 int valida_cpf(char cpf[11]);
 void consultar(void);
+void listar(void);
 //Fim Protitipos
 
 /*Menu principal*/
@@ -76,8 +77,7 @@ void menu_clientes(){
 		    		break;
 		    	
 		    	case '2':
-		    		printf ("\n           ########## LISTA CLIENTES ##########            ");
-		    		printf ("\nEm desenvolvimento...");
+		    		listar();
 		    		printf ("\n\n");
 		    		break;
 		    	
@@ -164,22 +164,12 @@ void cadastro0(){
 		cad.telefone[strcspn(cad.telefone, "\n")] = 0;
 
 		//Alocação pras notas de enfermagem (como o cliente chegou, consciente/inconsciente, queixas etc.)
-		cad.notas_enf = (char*)malloc(256 * sizeof(char));
-		if (cad.notas_enf != NULL) {
-			printf("Digite as notas de enfermagem: ");
-			while (getchar() != '\n');
-			fgets(cad.notas_enf, 256, stdin);
-			cad.notas_enf[strcspn(cad.notas_enf, "\n")] = 0;
-		} else {
-			printf("Erro de alocação de memória...");
-			return;
-		}
-
+		printf("Digite as notas de enfermagem: ");
+		fgets(cad.notas_enf, 256, stdin);
+		cad.notas_enf[strcspn(cad.notas_enf, "\n")] = 0;
 
 		fwrite(&cad, sizeof(CADASTRO), 1, arquivo);
 		printf("Cadastro realizado!");
-
-		free(cad.notas_enf);
 	}
 	
 	if (fclose(arquivo) == 0){
@@ -226,14 +216,65 @@ void consultar() {
 				encontrado = true;
 				break;
 			} 
-
-			if (encontrado != true) {
-				printf("\nCliente com o CPF %s não encontrado...\n", auxcpf);
-			}
-
-			fclose(arquivo);
 		}
+		if (encontrado != true) {
+				printf("\nCliente com o CPF %s não encontrado...\n", auxcpf);
+		}
+
+		fclose(arquivo);
 	}
+
+}
+
+/*Listar clientes*/
+void listar() {
+	setlocale(LC_ALL, "portuguese");
+
+	FILE* arquivo;
+	CADASTRO cad;
+	CADASTRO *clientes = NULL;
+
+	int contador = 0;
+
+	arquivo = fopen("clientes.txt", "rb");
+	if (arquivo == NULL) {
+		printf("Sem usuários cadastrados...");
+	} else {
+		while(fread(&cad, sizeof(CADASTRO), 1, arquivo) == 1) {
+			clientes = realloc(clientes, (contador + 1) * sizeof(CADASTRO));
+			if (clientes == NULL) {
+				printf("Erro de alocação de memória...\n");
+				fclose(arquivo);
+				return;
+			}
+			clientes[contador++] = cad;
+		}
+		fclose(arquivo);
+	}
+
+	for (int i = 0; i < contador; i++) {
+        for (int j = 0; j < contador - i - 1; j++) {
+            if (strcmp(clientes[j].nome, clientes[j + 1].nome) > 0) {
+                // Trocar os clientes
+                CADASTRO temp = clientes[j];
+                clientes[j] = clientes[j + 1];
+                clientes[j + 1] = temp;
+            }
+        }
+    }
+
+	printf("\n           ########## LISTA DE CLIENTES ##########            \n");
+    for (int i = 0; i < contador; i++) {
+        printf("\nCliente %d:\n", i + 1);
+        printf("Nome: %s\n", clientes[i].nome);
+        printf("CPF: %s\n", clientes[i].cpf);
+        printf("Data de Nascimento: %s\n", clientes[i].data_nascimento);
+        printf("Telefone: %s\n", clientes[i].telefone);
+        printf("Notas de Enfermagem: %s\n", clientes[i].notas_enf);
+        printf("---------------------------------\n");
+    }
+
+	free(clientes);
 
 }
 

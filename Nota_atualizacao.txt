@@ -31,3 +31,8 @@ Atualização 2.4
 	-Adicionado consulta de clientes.
  	-Tem um erro no menu em que ele aparece duas vezes ao terminar uma ação
 
+Atualização 2.5
+	-Adicionado listagem de clientes
+	-Houve problemas com o malloc, então optei por alocação estática mesmo, talvez eu volte com o malloc no futuro.
+
+
