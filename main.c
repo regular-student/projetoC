@@ -24,7 +24,7 @@ int main() {
 	
 	do{
 		menu_principal();
-		entrada = getch();
+		entrada = getchar();
 		
 		switch(entrada){
 			case '1' : //Parte dos Clientes
@@ -42,8 +42,8 @@ int main() {
 				break;
 				
 			default :
-				printf ("\n		Opção invalida				");
-				printf ("\n	Esolha outra opção para continuar	");	
+				printf ("\n		Opï¿½ï¿½o invalida				");
+				printf ("\n	Esolha outra opï¿½ï¿½o para continuar	");	
 				printf ("\n\n")	;
 			}
 			

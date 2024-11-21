@@ -42,7 +42,7 @@ void menu_principal(){
 void menu_clientes(){
 	
 	//difinicao de variaveis
-	int entra;
+	char entra;
 	int aux_client;
 	
 	//altera o valor da variavel auxiliar do menu de clientes
@@ -65,7 +65,7 @@ void menu_clientes(){
 	    printf("\n  [ESC] - SAIR ");
 	    printf("\n\n");
 	    
-	    scanf(" %c", &entra);
+	    entra = getchar();
 	    
 	    switch (entra){
 		    	
@@ -125,29 +125,39 @@ void cadastro0(){
     	printf ("\n           ########## CADASTRO DE CLIENTE ##########            ");
 	    printf ("\n\nDigite o nome do cliente: ");
 	    
-	    fflush(stdin);
+	    while (getchar() != '\n');
 	    fgets (cad.nome, 51, stdin);
 	   	cad.nome[strcspn(cad.nome, "\n")] = 0;
 	    
+		if (strlen(cad.nome) == 0) {
+            printf("Nome não pode ser vazio!\n");
+            return;
+        }
+
 	    printf ("Digite o CPF do cliente: ");
 	    
 	    fflush(stdin);
 	   	fgets (cad.cpf, 12, stdin);
 		cad.cpf[strcspn(cad.cpf, "\n")] = 0;
 		
-		if (valida_cpf(cad.cpf) != 1) {return;};
+		// printf("CPF armazenado: '%s' (tamanho: %lu)\n", cad.cpf, strlen(cad.cpf));
+		
+		if (valida_cpf(cad.cpf) != 1) {
+			printf("O CPF é inválido!");
+			return;
+		};
 
 		cad.ativo = true;
 
 		printf("Digite a data de nascimento (DD/MM/AAAA): ");
 
-		fflush(stdin);
+		while (getchar() != '\n');
 		fgets(cad.data_nascimento, 11, stdin);
 		cad.data_nascimento[strcspn(cad.data_nascimento, "\n")] = 0;
 
 		printf("Digite o número de telefone ((XX) XXXXX-XXXX)");
 
-		fflush(stdin);
+		while (getchar() != '\n');
 		fgets(cad.telefone, 15, stdin);
 		cad.telefone[strcspn(cad.telefone, "\n")] = 0;
 
@@ -155,7 +165,7 @@ void cadastro0(){
 		cad.notas_enf = (char*)malloc(256 * sizeof(char));
 		if (cad.notas_enf != NULL) {
 			printf("Digite as notas de enfermagem: ");
-			fflush(stdin);
+			while (getchar() != '\n');
 			fgets(cad.notas_enf, 256, stdin);
 			cad.notas_enf[strcspn(cad.notas_enf, "\n")] = 0;
 		} else {
@@ -266,8 +276,8 @@ int valida_cpf(char cpf[11]){
 	//validação
 	int valido = 0;
 
-	if (dig1 == cpf_numeros[10]) {valido++;}
-	if (dig2 == cpf_numeros[11]) {valido++;}
+	if (dig1 == cpf_numeros[9]) {valido++;}
+	if (dig2 == cpf_numeros[10]) {valido++;}
 
 	if (valido == 2) {
 		return 1;
