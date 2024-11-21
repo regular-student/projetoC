@@ -23,3 +23,6 @@ Atualização 2.1
 Atualização 2.2
 	-Adicionado a validação de CPF
 	-Adicionado o resto do cadastro
+
+Atualização 2.3
+	-Correção de erros

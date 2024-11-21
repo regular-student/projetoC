@@ -65,7 +65,7 @@ void menu_clientes(){
 	    printf("\n  [ESC] - SAIR ");
 	    printf("\n\n");
 	    
-	    entra = getch();
+	    scanf(" %c", &entra);
 	    
 	    switch (entra){
 		    	
@@ -139,7 +139,7 @@ void cadastro0(){
 
 		cad.ativo = true;
 
-		printf("Digite a data de nascimento (DD/MM/AAAA): ")
+		printf("Digite a data de nascimento (DD/MM/AAAA): ");
 
 		fflush(stdin);
 		fgets(cad.data_nascimento, 11, stdin);
