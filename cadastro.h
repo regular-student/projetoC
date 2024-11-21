@@ -23,6 +23,7 @@ void cadastro0(void);
 void desativar_cliente(void);
 void excluir_cliente(void);
 int valida_cpf(char cpf[11]);
+void consultar(void);
 //Fim Protitipos
 
 /*Menu principal*/
@@ -81,7 +82,8 @@ void menu_clientes(){
 		    		break;
 		    	
 				case '3':
-					printf ("\n           ########## CONSULTA DE CLIENTES ##########            ");	
+					printf ("\n           ########## CONSULTA DE CLIENTES ##########            ");
+					consultar();	
 					printf ("\n\nEm desenvolvimento...");
 					printf ("\n\n");
 					break;
@@ -186,6 +188,53 @@ void cadastro0(){
 		printf ("Erro no fechamento do arquivo.\n");
 	}
 	
+}
+
+/*Consultar Cliente*/
+void consultar() {
+	char auxcpf[11];
+	bool encontrado = false;
+
+	fflush(stdin);
+	printf("\n\n");
+	printf("Digite o CPF que deseja consultar: ");
+	scanf("%s", auxcpf);
+
+	if (valida_cpf(auxcpf) != 1) {
+		printf("O CPF é inválido!");
+		return;
+	};
+
+	FILE* arquivo;
+	CADASTRO cad;
+
+	arquivo = fopen("clientes.txt", "rb");
+
+	if(arquivo == NULL){
+      	printf ("\n\n ERRO NA ABERTURA DO ARQUIVO \n\n");
+		}
+    else{
+    	printf ("\n           ########## CONSULTAR CLIENTE ##########            ");
+	    while (fread(&cad, sizeof(CADASTRO), 1, arquivo) == 1) {
+			if (strcmp(cad.cpf, auxcpf) == 0) {
+				printf("\nCliente encontrado:");
+				printf("\nNome: %s", cad.nome);
+				printf("\nCPF: %s", cad.cpf);
+				printf("\nData de Nascimento: %s", cad.data_nascimento);
+				printf("\nTelefone: %s", cad.telefone);
+				printf("\nNotas de Enfermagem: %s\n", cad.notas_enf);
+				encontrado = true;
+				break;
+			} 
+
+			if (encontrado != true) {
+				printf("\nCliente com o CPF %s não encontrado...\n", auxcpf);
+			}
+
+			fclose(arquivo);
+		}
+	}
+
 }
 
 /*Desativar clientes*/
