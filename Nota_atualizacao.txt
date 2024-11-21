@@ -26,3 +26,8 @@ Atualização 2.2
 
 Atualização 2.3
 	-Correção de erros
+
+Atualização 2.4
+	-Adicionado consulta de clientes.
+ 	-Tem um erro no menu em que ele aparece duas vezes ao terminar uma ação
+
