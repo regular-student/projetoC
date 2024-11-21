@@ -19,3 +19,7 @@ Atualização 2.0
 Atualização 2.1
 	-Correção no erro causado pela Versão 2.0 onde a referencia era indefinida para a função "cadastro"
 	-Alterações na função de cadastros (tem um erro que não esta sendo salvo no arquivo txt, na maquina da faculdade estava funcionando)
+
+Atualização 2.2
+	-Adicionado a validação de CPF
+	-Adicionado o resto do cadastro
