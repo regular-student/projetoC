@@ -67,7 +67,7 @@ void menu_clientes(){
 	    printf("\n  [ESC] - SAIR ");
 	    printf("\n\n");
 	    
-	    entra = getchar();
+	    entra = getch();
 	    
 	    switch (entra){
 		    	
@@ -84,7 +84,6 @@ void menu_clientes(){
 				case '3':
 					printf ("\n           ########## CONSULTA DE CLIENTES ##########            ");
 					consultar();	
-					printf ("\n\nEm desenvolvimento...");
 					printf ("\n\n");
 					break;
 					
@@ -169,6 +168,7 @@ void cadastro0(){
 		cad.notas_enf[strcspn(cad.notas_enf, "\n")] = 0;
 
 		fwrite(&cad, sizeof(CADASTRO), 1, arquivo);
+		
 		printf("Cadastro realizado!");
 	}
 	
@@ -213,6 +213,12 @@ void consultar() {
 				printf("\nData de Nascimento: %s", cad.data_nascimento);
 				printf("\nTelefone: %s", cad.telefone);
 				printf("\nNotas de Enfermagem: %s\n", cad.notas_enf);
+				printf("\nStatus do Cliente: ");
+				if(cad.ativo = true){
+					printf("Ativo");
+				} else{
+					printf ("Desativado");
+				}
 				encontrado = true;
 				break;
 			} 
@@ -223,12 +229,13 @@ void consultar() {
 
 		fclose(arquivo);
 	}
-
+	Sleep(2000);
 }
 
 /*Listar clientes*/
 void listar() {
 	setlocale(LC_ALL, "portuguese");
+	int i, j;
 
 	FILE* arquivo;
 	CADASTRO cad;
@@ -252,8 +259,8 @@ void listar() {
 		fclose(arquivo);
 	}
 
-	for (int i = 0; i < contador; i++) {
-        for (int j = 0; j < contador - i - 1; j++) {
+	for (i = 0; i < contador; i++) {
+        for (j = 0; j < contador - i - 1; j++) {
             if (strcmp(clientes[j].nome, clientes[j + 1].nome) > 0) {
                 // Trocar os clientes
                 CADASTRO temp = clientes[j];
@@ -264,43 +271,109 @@ void listar() {
     }
 
 	printf("\n           ########## LISTA DE CLIENTES ##########            \n");
-    for (int i = 0; i < contador; i++) {
+    for (i = 0; i < contador; i++) {
         printf("\nCliente %d:\n", i + 1);
         printf("Nome: %s\n", clientes[i].nome);
         printf("CPF: %s\n", clientes[i].cpf);
         printf("Data de Nascimento: %s\n", clientes[i].data_nascimento);
         printf("Telefone: %s\n", clientes[i].telefone);
         printf("Notas de Enfermagem: %s\n", clientes[i].notas_enf);
-        printf("---------------------------------\n");
+        printf("Status do cliente: ");
+        if(clientes[i].ativo = false){
+        	printf("Desativado");
+		} else{
+			printf("Ativo");
+		}
+        printf("\n---------------------------------\n");
     }
 
 	free(clientes);
-
+	Sleep(2000);
 }
 
 /*Desativar clientes*/
 void desativar_cliente(){
 	
-	int cpf_cliente;
-	int resultado;
+	char aux1;
+	char saida = 1;
+	char auxcpf[11];
+
+	fflush(stdin);
+	printf("\n\n");
+	printf("Digite o CPF que deseja desativar: ");
+	scanf("%s", auxcpf);
+
+	if (valida_cpf(auxcpf) != 1) {
+		printf("O CPF invÃ¡lido!");
+		return;
+	};
+
+	FILE* arquivo;
+	CADASTRO cad;
+
+	arquivo = fopen("clientes.txt", "rb");
 	
-		FILE* arquivo;
-    arquivo = fopen("clientes.txt", "a+");
-    
-     if(arquivo == NULL){
+	if(arquivo == NULL){
       	printf ("\n\n ERRO NA ABERTURA DO ARQUIVO \n\n");
-		}
-    else{
-    	printf ("\n           ########## DESATIVAR CLIENTE ##########            ");
-	    printf ("\n\nEm desenvolvimento... ");
-	}
-	
-	if (fclose(arquivo) == 0){
-		printf ("\n");
 	}else{
-		printf ("Erro no fechamento do arquivo.\n");
-	}
+		
+		FILE* auxil;
+		auxil = fopen("auxil.txt", "w");
+		fclose(auxil);
+		while(fread(&cad, sizeof(CADASTRO), 1, arquivo) == 1){
+        	auxil = fopen("auxil.txt", "ab");
+        	if(strncmp(cad.cpf, auxcpf, 11) == 0){
+				do{
+					printf("\nNome: %s", cad.nome);
+					printf("\nCPF: %s", cad.cpf);
+					printf("\nSituação: ");
+					if (cad.ativo = true){
+						printf ("Ativo");
+					} else{
+						printf ("Desativado");
+					}
+				
+					if (cad.ativo = true){
+						printf ("\nDeseja desativar esse cliente? ");
+						printf ("\n[s] para alterar [ESC] para sair: ");
+						
+						aux1 = getch();
+						switch(aux1){
+							case 's':
+								cad.ativo = false;
+								printf ("\nDesativado com Sucesso");
+								saida = 0;
+								break;
+								
+							case 'S':
+								cad.ativo = false;
+								printf ("\nDesativado com Sucesso");
+								saida = 0;
+								break;
+							
+							case (char)27:
+								saida = 0;
+								break;
+							
+							default:
+								printf ("\n\nEscolha uma opção valida");
+								break;
+						}
+					}
+				
+				}while(saida == 1);
+				
+			}else{
+				printf("erro");
+			}
 	
+			fwrite(&cad, sizeof(CADASTRO), 1, auxil);
+		    fclose(auxil);
+		}
+	}
+	fclose(arquivo);
+    remove("clientes.txt");
+    rename("auxil.txt", "clientes.txt");
 }
 
 /*Excluir Clientes*/
@@ -328,12 +401,13 @@ void excluir_cliente(){
 int valida_cpf(char cpf[11]){
 	int cpf_numeros[11]; //array que armazena os nÃºmeros inteiros
 	int mult = 2, soma = 0, aux, dig1, dig2;
-	for (int i = 0; i < 11; i++) {
+	int i;
+	for (i = 0; i < 11; i++) {
         cpf_numeros[i] = cpf[i] - 48; //conversÃ£o de char para int
     }
 
 	//loop para pegar o primeiro dÃ­gito
-	for (int i = 8; i >= 0; i--) {
+	for (i = 8; i >= 0; i--) {
 		soma = soma + (mult * cpf_numeros[i]);
 		mult++;
 	}
@@ -350,7 +424,7 @@ int valida_cpf(char cpf[11]){
 	mult = 2;
 	aux = 0;
 	//loop para pegar o segundo dÃ­gito
-	for (int i = 9; i >= 0; i--) {
+	for (i = 9; i >= 0; i--) {
 		soma = soma + (mult * cpf_numeros[i]);
 		mult++;
 	}

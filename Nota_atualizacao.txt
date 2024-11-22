@@ -34,5 +34,8 @@ Atualização 2.4
 Atualização 2.5
 	-Adicionado listagem de clientes
 	-Houve problemas com o malloc, então optei por alocação estática mesmo, talvez eu volte com o malloc no futuro.
+Atualização 2.6
+	-Avanços no desenvolvimento da aba de desativar Clientes, ainda não esta completa
+	-Reparei em alguns bugs na área do cadastro de clientes, talvez eu tenha alterado algo que não deveria ou talvez seja bug da minha maquina
 
 
