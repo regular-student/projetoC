@@ -214,7 +214,7 @@ void consultar() {
 				printf("\nTelefone: %s", cad.telefone);
 				printf("\nNotas de Enfermagem: %s\n", cad.notas_enf);
 				printf("\nStatus do Cliente: ");
-				if(cad.ativo = true){
+				if(cad.ativo == true){
 					printf("Ativo");
 				} else{
 					printf ("Desativado");
@@ -315,25 +315,29 @@ void desativar_cliente(){
 	
 	if(arquivo == NULL){
       	printf ("\n\n ERRO NA ABERTURA DO ARQUIVO \n\n");
-	}else{
-		
-		FILE* auxil;
-		auxil = fopen("auxil.txt", "w");
+		return;
+	}
+
+	FILE* auxil;
+	auxil = fopen("auxil.txt", "wb");
+	if (auxil == NULL) {
+		printf("Erro na abertura do arquivo temporÃ¡rio.");
 		fclose(auxil);
+	} else {
 		while(fread(&cad, sizeof(CADASTRO), 1, arquivo) == 1){
-        	auxil = fopen("auxil.txt", "ab");
+        	// auxil = fopen("auxil.txt", "ab");
         	if(strncmp(cad.cpf, auxcpf, 11) == 0){
 				do{
 					printf("\nNome: %s", cad.nome);
 					printf("\nCPF: %s", cad.cpf);
-					printf("\nSituação: ");
-					if (cad.ativo = true){
+					printf("\nSituaï¿½ï¿½o: ");
+					if (cad.ativo == true){
 						printf ("Ativo");
 					} else{
 						printf ("Desativado");
 					}
 				
-					if (cad.ativo = true){
+					if (cad.ativo == true){
 						printf ("\nDeseja desativar esse cliente? ");
 						printf ("\n[s] para alterar [ESC] para sair: ");
 						
@@ -356,7 +360,7 @@ void desativar_cliente(){
 								break;
 							
 							default:
-								printf ("\n\nEscolha uma opção valida");
+								printf ("\n\nEscolha uma opï¿½ï¿½o valida");
 								break;
 						}
 					}
