@@ -235,7 +235,6 @@ void consultar() {
 /*Listar clientes*/
 void listar() {
 	setlocale(LC_ALL, "portuguese");
-	int i, j;
 
 	FILE* arquivo;
 	CADASTRO cad;
@@ -259,8 +258,8 @@ void listar() {
 		fclose(arquivo);
 	}
 
-	for (i = 0; i < contador; i++) {
-        for (j = 0; j < contador - i - 1; j++) {
+	for (int i = 0; i < contador; i++) {
+        for (int j = 0; j < contador - i - 1; j++) {
             if (strcmp(clientes[j].nome, clientes[j + 1].nome) > 0) {
                 // Trocar os clientes
                 CADASTRO temp = clientes[j];
@@ -271,7 +270,7 @@ void listar() {
     }
 
 	printf("\n           ########## LISTA DE CLIENTES ##########            \n");
-    for (i = 0; i < contador; i++) {
+    for (int i = 0; i < contador; i++) {
         printf("\nCliente %d:\n", i + 1);
         printf("Nome: %s\n", clientes[i].nome);
         printf("CPF: %s\n", clientes[i].cpf);
@@ -382,21 +381,60 @@ void desativar_cliente(){
 
 /*Excluir Clientes*/
 void excluir_cliente(){
+	char auxcpf[11];
+
+	fflush(stdin);
+	printf("\n\n");
+	printf("Digite o CPF que deseja excluir: ");
+	scanf("%s", auxcpf);
+
+	if (valida_cpf(auxcpf) != 1) {
+		printf("O CPF é inválido!\n");
+		return;
+	}
+
 	FILE* arquivo;
-    arquivo = fopen("clientes.txt", "a+");
-    
-     if(arquivo == NULL){
-      	printf ("\n\n ERRO NA ABERTURA DO ARQUIVO \n\n");
-		}
-    else{
-    	printf ("\n           ########## EXCLUIR CLIENTE ##########            ");
-	    printf ("\n\nEm desenvolvimento...");
+	FILE* temp;
+	CADASTRO cad;
+    arquivo = fopen("clientes.txt", "rb");
+
+	if (arquivo == NULL) {
+		printf("\n\n ERRO NA ABERTURA DO ARQUIVO \n\n");
+		return;
 	}
 	
-	if (fclose(arquivo) == 0){
-		printf ("\n");
-	}else{
-		printf ("Erro no fechamento do arquivo.\n");
+	temp = fopen("auxil.txt", "wb");
+
+    if (temp == NULL) {
+        printf("\nERRO AO CRIAR ARQUIVO TEMPORÁRIO\n");
+        fclose(arquivo);
+        return;
+    }
+
+	int encontrado = 0;
+
+	while (fread(&cad, sizeof(CADASTRO), 1, arquivo) == 1) {
+		if (strcmp(cad.cpf, auxcpf) == 0) {
+			encontrado = 1;
+			printf("\nCliente encontrado:");
+            printf("\nNome: %s", cad.nome);
+            printf("\nCPF: %s", cad.cpf);
+
+			printf("\n\n");
+			printf("Cliente excluido!\n");
+		} else {
+			fwrite(&cad, sizeof(CADASTRO), 1, temp);
+		}
+	}
+
+	fclose(arquivo);
+    fclose(temp);
+
+	if (encontrado == 1) {
+		remove("clientes.txt");
+    	rename("auxil.txt", "clientes.txt");
+	} else {
+		remove("auxil.txt");
 	}
 	
 }
