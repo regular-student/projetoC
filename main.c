@@ -24,7 +24,7 @@ int main() {
 	
 	do{
 		menu_principal();
-		entrada = getch();
+		entrada = getchar();
 		
 		switch(entrada){
 			case '1' : //Parte dos Clientes

@@ -56,7 +56,7 @@ void menu_clientes(){
 		printf("\n");
 	    printf("\n  [1] - Cadastrar Cliente ");
 	    printf("\n");
-	    printf("\n  [2] - Litar Clientes ");
+	    printf("\n  [2] - Listar Clientes ");
 	    printf("\n");
 	    printf("\n  [3] - Consultar pelo CPF ");
 	    printf("\n");
@@ -67,7 +67,7 @@ void menu_clientes(){
 	    printf("\n  [ESC] - SAIR ");
 	    printf("\n\n");
 	    
-	    entra = getch();
+	    entra = getchar();
 	    
 	    switch (entra){
 		    	
@@ -229,12 +229,13 @@ void consultar() {
 
 		fclose(arquivo);
 	}
-	Sleep(2000);
+	//Sleep(2000);
 }
 
 /*Listar clientes*/
 void listar() {
 	setlocale(LC_ALL, "portuguese");
+	system("cls");
 
 	FILE* arquivo;
 	CADASTRO cad;
@@ -285,13 +286,14 @@ void listar() {
 		}
         printf("\n---------------------------------\n");
     }
-
+	
 	free(clientes);
-	Sleep(2000);
+	Sleep(5000);
 }
 
 /*Desativar clientes*/
 void desativar_cliente(){
+	system("cls");
 	
 	char aux1;
 	char saida = 1;
@@ -334,13 +336,14 @@ void desativar_cliente(){
 						printf ("Ativo");
 					} else{
 						printf ("Desativado");
+						break;
 					}
 				
 					if (cad.ativo == true){
 						printf ("\nDeseja desativar esse cliente? ");
 						printf ("\n[s] para alterar [ESC] para sair: ");
 						
-						aux1 = getch();
+						aux1 = getchar();
 						switch(aux1){
 							case 's':
 								cad.ativo = false;
@@ -367,7 +370,7 @@ void desativar_cliente(){
 				}while(saida == 1);
 				
 			}else{
-				printf("erro");
+				printf("Erro, CPF já está desativado.");
 			}
 	
 			fwrite(&cad, sizeof(CADASTRO), 1, auxil);
@@ -377,6 +380,8 @@ void desativar_cliente(){
 	fclose(arquivo);
     remove("clientes.txt");
     rename("auxil.txt", "clientes.txt");
+    
+    Sleep(5000);
 }
 
 /*Excluir Clientes*/
